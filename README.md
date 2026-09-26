@@ -7,3 +7,4 @@ Stata do-file and full dataset for empirical replication.
 
 ## Software
 Stata 17/18
+## All rights reserved. It is free for academic use only with adequate citation and acknowledgments. For any other use, contact Kuisheng Jiang: kuishengj@163.com.

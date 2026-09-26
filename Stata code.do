@@ -22,7 +22,10 @@ label var absrinv   "ABSRINV"
 label var oinv      "OINV"
 label var absruinv  "UINV"
 label var acpu      "USCPU"
-
+label define soe_lab 1 "SOE" 0 "Non-SOE"
+label define region_lab 1 "Developed" 0 "Less-Developed"
+label define tech_lab 1 "TECH" 0 "Non-TECH"
+label define high_hhi_lab 1 "High-EXP_DIV" 0 "LOW-EXP_DIV"
 
 
 
@@ -69,7 +72,7 @@ esttab y1 y2 y3 using wacc.docx, b("%9.4f") star(* 0.1 ** 0.05 *** 0.01) nogap n
 
 
 
-***Cross-Sectional Analysis of the Effects of UCT***
+***  Cross-Sectional Analysis of the Effects of UCT  ***
 reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quarter_dummy4 if soe==1, absorb(stkcd) vce(cluster stkcd yq)
     est store y1
 reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quarter_dummy4 if soe==0, absorb(stkcd) vce(cluster stkcd yq)
@@ -85,15 +88,11 @@ reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quart
 esttab y1 y2 y3 y4 y5 y6 using heter.docx,b("%9.4f") star(* 0.1 ** 0.05 *** 0.01) nogap nocompress scalar(N) ar2 replace 
 
 ***  U.S.-China Tension, U.S. Export Dependence and Export Market Diversification  ***
-reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quarter_dummy4 if high_us_dpe==1, absorb(stkcd) vce(cluster stkcd yq)
-    est store y1
-reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quarter_dummy4 if high_us_dpe==0, absorb(stkcd) vce(cluster stkcd yq)
-    est store y2
 reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quarter_dummy4 if high_hhi==1 , absorb(stkcd) vce(cluster stkcd yq)
-    est store y3
+    est store y1
 reghdfe  lead1_invest auct tq ncf sg size gdpg mvol std_roa quarter_dummy2-quarter_dummy4 if high_hhi==0, absorb(stkcd) vce(cluster stkcd yq)
-    est store y4
-esttab y1 y2 y3 y4  using Export.tex, b("%9.4f") star(* 0.1 ** 0.05 *** 0.01) nogap nocompress scalar(N) ar2 replace 
+    est store y2
+esttab y1 y2 using Export.tex, b("%9.4f") star(* 0.1 ** 0.05 *** 0.01) nogap nocompress scalar(N) ar2 replace 
 
 ***  U.S.-China Tension and Firm Investment Opportunities  ***
 reghdfe  lead1_invest auct tq uct_tq ncf size gdpg mvol std_roa quarter_dummy2-quarter_dummy4, absorb(stkcd) vce(cluster stkcd yq)
